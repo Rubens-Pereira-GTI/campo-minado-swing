@@ -2,6 +2,7 @@ package br.com.cod3r.cm.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class Campo {
    
@@ -9,12 +10,23 @@ public class Campo {
     private final int coluna;
     private boolean aberto= false;
     private boolean minado= false;
-    private boolean marcado = false;
+    private boolean marcado = false;    
     private List<Campo> vizinhos = new ArrayList<>();
 
+
+    private List<CampoObservers> campoObserversList = new ArrayList<CampoObservers>();
+    
     public Campo(int linha, int coluna){
         this.linha = linha;
         this.coluna = coluna;
+    }
+
+    void notificarObservers(CampoEvent event){
+        campoObserversList.stream().forEach(obs -> obs.eventoOcorreu(this, event));
+    }
+
+    void registrarObserver(CampoObservers campoObservers){
+        campoObserversList.add(campoObservers);
     }
 
 
@@ -44,21 +56,29 @@ public class Campo {
     }
 
     //lógica de alternancia de marcação
-    //TODO modificar o método alterar marcação para que quando ele aconteça um observer seja notificado
     public void alternarMarcacao(){
         if(!aberto){
             marcado = !marcado;
+
+            if(marcado){
+                notificarObservers(CampoEvent.MARCAR);
+            }else{
+                notificarObservers(CampoEvent.DESMARCAR);
+            }
         } 
     }
 
     public boolean abrir(){
         if(!aberto && !marcado ){
-            aberto = true;
             if(minado){
                 //TODO implementar nova versão     
-                //FIXME  erro que precisa ser corrigido
+                notificarObservers(CampoEvent.EXPLODIR);
+                return true;         
             }
-            //vamos abrir a vizinhaça até que não esteja mais seguro
+
+            setAberto(true);
+            notificarObservers(CampoEvent.ABRIR);
+
             if(vizinhancaSegura()){
                 vizinhos.forEach(v -> v.abrir());    
             }
