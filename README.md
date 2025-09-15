@@ -26,4 +26,4 @@ The `JAVA PROJECTS` view allows you to manage your dependencies. More details ca
 [x] crie uma interface que gere um polimorfismo entre os observers e essa interface, passe para essa inerface duas coisas, o evento e o observador. campoObserver
 [x] Mudança no código! crie uma lista dentro do subject com a function interface BiConsumer, passando para ele o evento e o observador
 [x] crie um método que adicione os observadores na lista - registrarObservers
-[ ] crie um método que notifique os observadores - notifiqueObservers - notifique todos os observer através de uma expressão lambda 
+[x] crie um método que notifique os observadores - notifiqueObservers - notifique todos os observer através de uma expressão lambda 
