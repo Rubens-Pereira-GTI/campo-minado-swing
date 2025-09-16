@@ -2,7 +2,7 @@ package br.com.cod3r.cm.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
+
 
 public class Campo {
    
@@ -21,11 +21,11 @@ public class Campo {
         this.coluna = coluna;
     }
 
-    void notificarObservers(CampoEvent event){
+    public void notificarObservers(CampoEvent event){
         campoObserversList.stream().forEach(obs -> obs.eventoOcorreu(this, event));
     }
 
-    void registrarObserver(CampoObservers campoObservers){
+    public void registrarObserver(CampoObservers campoObservers){
         campoObserversList.add(campoObservers);
     }
 
@@ -108,6 +108,10 @@ public class Campo {
 
     void setAberto(boolean aberto) {
         this.aberto = aberto;
+
+        if(aberto){
+            notificarObservers(CampoEvent.ABRIR);
+        }
     }
 
 
@@ -135,14 +139,15 @@ public class Campo {
         return desvendado || protegido;
     }
 
-    public long minasNaVizinhaca(){
-        return vizinhos.stream().filter(v -> v.minado).count();
+    public int minasNaVizinhaca(){
+        return (int) vizinhos.stream().filter(v -> v.minado).count();
     }
 
     public void reiniciar(){
         aberto = false;
         minado = false;
         marcado = false;
+        notificarObservers(CampoEvent.REINICIAR);
     }
 
   

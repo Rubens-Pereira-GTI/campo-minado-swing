@@ -4,11 +4,11 @@ public class ResultadoEvento {
     
     private final boolean ganhou;
 
-    boolean isGanhou(){
+    public boolean isGanhou(){
         return ganhou;
     }
 
-    ResultadoEvento(boolean ganhou){
+    public ResultadoEvento(boolean ganhou){
         this.ganhou = ganhou;
     }
 }

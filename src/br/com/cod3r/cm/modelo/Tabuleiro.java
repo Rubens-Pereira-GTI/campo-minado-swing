@@ -21,6 +21,7 @@ public class Tabuleiro implements CampoObservers{
         observadores.stream().forEach(o -> o.accept(new ResultadoEvento(resultado)));
     }
 
+    //será utilizada na criação grafica dos campos
     public void paraCadaCampo(Consumer<Campo> funcao){
         campos.forEach(funcao);
     }
@@ -53,6 +54,7 @@ public class Tabuleiro implements CampoObservers{
     private void mostrarMinas(){
         campos.stream()
         .filter(c -> c.isMinado())
+        .filter(c -> !c.isMarcado())
         .forEach(c -> c.setAberto(true));
     }
 
@@ -92,12 +94,10 @@ public class Tabuleiro implements CampoObservers{
                 campo.registrarObserver(this);                                
                 campos.add(campo); 
             }
-
         }
     }
 
-    public boolean objetivoAlcancado(){
-        
+    public boolean objetivoAlcancado(){        
         return campos.stream().allMatch(c -> c.objetivoAlcancado());
     }
 
