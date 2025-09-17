@@ -7,7 +7,7 @@ import br.com.cod3r.cm.modelo.Tabuleiro;
 public class TelaPrincipal extends JFrame {
     
     public TelaPrincipal(){
-        Tabuleiro tabuleiro = new Tabuleiro(16, 30, 3);
+        Tabuleiro tabuleiro = new Tabuleiro(16, 30, 30);
         PainelTabuleiro painelTabuleiro = new PainelTabuleiro(tabuleiro);
         add(painelTabuleiro);
         //JFrame set

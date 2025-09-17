@@ -21,7 +21,6 @@ public class Tabuleiro implements CampoObservers{
         observadores.stream().forEach(o -> o.accept(new ResultadoEvento(resultado)));
     }
 
-    //será utilizada na criação grafica dos campos
     public void paraCadaCampo(Consumer<Campo> funcao){
         campos.forEach(funcao);
     }
@@ -34,10 +33,7 @@ public class Tabuleiro implements CampoObservers{
         associarOsVizinhos();
         sortearMinas();
     }
-    /*
-     * Esse metodo vai encontrar o campo na lista e chamar o método abrir do campo
-     * Quando encontrado o loop é encerrado, chamamos o método responsável por abrir o campo
-     */
+    
     public void abrir(int linha, int coluna){
 
         try {
@@ -58,7 +54,6 @@ public class Tabuleiro implements CampoObservers{
         .forEach(c -> c.setAberto(true));
     }
 
-    //Esse metodo vai encontrar o campo 
     public void alternarMarcacao(int linha, int coluna){
         campos.stream()
             .filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
@@ -73,8 +68,6 @@ public class Tabuleiro implements CampoObservers{
         do{
             int aleatorio = (int) (Math.random() * campos.size());
             campos.get(aleatorio).minar();
-//essa ultima linha se colocada no top gera um bug pq quando a segunda linha roda, minas armadas não atualiza 
-//gerando um bug de uma bomba a mais, pois ele passa pelo loop sem essa atualização toda vez
             minasArmadas = (int) campos.stream().filter(minado).count();
         }while(minasArmadas < minas);
     }
@@ -123,8 +116,6 @@ public class Tabuleiro implements CampoObservers{
 
     public int getColunas() {
         return colunas;
-    }
-
-   
+    }   
 
 }
